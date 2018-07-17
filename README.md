@@ -17,7 +17,23 @@ The minimum requirements to get started with **TypeEdge.AnomalyDetection** are:
 
 1. Edit the `IotHubConnectionString` value of the  `/Thermostat.Emulator/appsettings.json` file. You need to use the **iothubowner** connection string from your Azure **IoT Hub**.
 
-1. Build and run the `Thermostat.Emulator` console app. To observe the generated waveform with a Fast Fourier Transformation, visit the visualization URL at http://localhost:5001. This is a visualization web application that runs on the Edge and helps you understand the data stream characteristics. You will see something like this:
+1. Build and run the `Thermostat.Emulator` console app. 
+
+### Visualization
+To observe the generated waveform with a Fast Fourier Transformation, you have to enable the `Visualization` path in the `Orchestration` module. This is done by changing the respective module twin.
+
+1. Start the `Thermostat.Emulator` console app.
+
+1. Go to the Visual Studio Solution explorer. Right click on the `Thermostat.ServiceApp` project and select `Debug` -> `Start new instance`.
+
+1. In the console app you will see  
+`Select Action: (T)win, (A)nomaly, (E)xit`.  
+Select `T` and hit `<Enter>`. You will see  
+`Select Processor routing modes (multiple choices are allowed) : (T)rain, (D)etect, (V)isualization, empty for none`  
+Select `V` and hit `<Enter>`.  
+Now the `Orchestrator` module will route the messages to the `Visualization` module.
+
+1. Visit the visualization URL at http://localhost:5001. This is a visualization web application that runs on the Edge and helps you understand the data stream characteristics. You will see something like this:
 
 <p align="center">
   <img width="80%" height="100%" src="images/VisualizationGraphs.PNG" style="max-width:600px">
@@ -25,7 +41,7 @@ The minimum requirements to get started with **TypeEdge.AnomalyDetection** are:
 
 ## Preface
 
-Although Anomaly Detection is a well-studied AI/ML field, Edge introduces a multi-constraint hosting environment that needs to be investigated en bloc. Anomaly Detection, as with every other compute-intensive processing on the Edge, is a highly tailored, scenario specific balance of trade-offs, such as performance, accuracy, latency, robustness and/or maintainability. These constraints arise from the nature of the Edge: in contrast to Cloud ML, the Edge ML usually has a non-scalable and fixed size compute capacity, limited memory and storage capabilities, with possibly unreliable network connectivity.
+Although Anomaly Detection is a well-studied AI/ML field, Edge introduces a multi-constraint hosting environment that needs to be investigated en bloc. Anomaly Detection, as with every other compute-intensive processing on the Edge, is a highly tailored, scenario balance of trade-offs, such as performance, accuracy, latency, robustness and/or maintainability. These constraints arise from the nature of the Edge: in contrast to Cloud ML, the Edge ML usually has a non-scalable and fixed size compute capacity, limited memory and storage capabilities, with possibly unreliable network connectivity.
 
 As with most ML on the Edge scenarios, Anomaly Detection on the Edge is assumed to be part of a bigger, composite Cloud+Edge solution. The main reason for having a composite ML solution is the clear need to leverage the scaling flexibility of the Cloud for model training, and then shipping the pre-tained ML models down to the Edge. This new composite ML application paradigm introduces complex requirements for solution operationalization and associated DevOps practices.
 
