@@ -11,9 +11,6 @@ using ThermostatApplication.Messages;
 using ThermostatApplication.Modules;
 using ThermostatApplication.Twins;
 
-using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.Logging;
-
 namespace Modules
 {
     public class TemperatureSensor : EdgeModule, ITemperatureSensor
@@ -41,27 +38,7 @@ namespace Modules
             });
         }
 
-        // This method connects to a url for SignalR to send data.
-        public static async Task<HubConnection> ConnectAsync(string baseUrl)
-        {
-            // Keep trying to until we can start
-            while (true)
-            {
-                var connection = new HubConnectionBuilder()
-                                .WithUrl(baseUrl)
-                                .Build();
-                try
-                {
-                    await connection.StartAsync();
-                    return connection;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    await Task.Delay(1000);
-                }
-            }
-        }
+
         public void GenerateAnomaly(int value)
         {
             Console.WriteLine($"GenerateAnomaly called with value:{value}");
@@ -73,8 +50,7 @@ namespace Modules
             double frequency = 2.0;
             int amplitute = 5;
             int samplingRate = 500;
-            // Connect to Host
-            HubConnection connection = await ConnectAsync("http://127.0.0.1:5000/visualizerhub");
+
             int i = 0;
             while (true)
             {
@@ -94,13 +70,8 @@ namespace Modules
                         Maximum = _maximum
                     };
 
-                    int left = 40;
-                    //var text = new string('-', (int)((value - +(_maximum + _minimum) / 2) / amplitute * left / 2) + left);
-                    //Console.WriteLine($"{value.ToString("F2")} {text}");
-                    Console.WriteLine(i);
-                    connection.InvokeAsync("SendMessage", i.ToString(), (int)((value - +(_maximum + _minimum) / 2) / amplitute * left / 2) + left);
                     i = i + 1;
-                    System.Threading.Thread.Sleep(50);
+                    Thread.Sleep(50);
                 }
                 await Temperature.PublishAsync(message);
 
