@@ -28,7 +28,7 @@ namespace Thermostat.ServiceApp
                 Console.WriteLine("Select Action: (T)win, (A)nomaly, (E)xit");
 
                 var res = Console.ReadLine();
-                switch (res.ToUpper())
+                switch (res?.ToUpper())
                 {
                     case "T":
                         await SetTwin();
@@ -63,7 +63,7 @@ namespace Thermostat.ServiceApp
             Routing result = 0;
 
             Console.WriteLine("Select Processor routing modes (multiple choices are allowed) : (T)rain, (D)etect, (V)isualization, empty for none");
-            var res = Console.ReadLine();
+            var res = Console.ReadLine()?.ToUpper();
             if (!string.IsNullOrEmpty(res))
             {
                 if (res.Contains("T"))
