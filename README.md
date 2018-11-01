@@ -1,3 +1,5 @@
+>Update:This project has been transferred to the official Azure.IoT.TypeEdge repo as [an implementation example](https://github.com/Azure/TypeEdge/tree/master/Examples/AnomalyDetection)
+
 # TypeEdge.AnomalyDetection
 High Frequency Unsupervised **Anomaly Detection on the Edge** using  [TypeEdge](https://github.com/paloukari/TypeEdge).
 
